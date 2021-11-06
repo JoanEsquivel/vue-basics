@@ -42,8 +42,8 @@
   <p>Adding heros to the list - Heros count {{ herosCount }}</p>
   <h2>{{ fullname }}</h2>
   <button @click="setFullName">Set Full name</button>
-  <h2>{{fname}}</h2>
-  <h2>{{lname}}</h2>
+  <h2>{{ fname }}</h2>
+  <h2>{{ lname }}</h2>
   <p>Computed: {{ randC }}</p>
   <p>Computed: {{ randC }}</p>
   <p>Computed: {{ randC }}</p>
@@ -63,24 +63,51 @@
 
   <p>Total Heros is {{ herosCount }}</p>
 
-  <h1>Adding heros to the list properly</h1>
+  <div class="w-full flex">
+    <div class="m-auto">
+      <h1 class="text-2xl text-center">Adding heros to the list properly</h1>
 
-  <ul>
-    <li v-for="(hero, index) in herosArrayOfObjects" v-bind:key="index">
-      <div>{{ hero.name }} <button @click="removeHero(index)">x</button></div>
-    </li>
-  </ul>
+      <ul>
+        <li class="flex justify-between" v-for="(hero, index) in herosArrayOfObjects" :key="hero.name">
+          <div>
+            {{ hero.name }} 
+          </div>
+          <button @click="removeHero(index)">x</button>
+        </li>
+      </ul>
 
-  <form @submit.prevent="addHero()">
-    <input type="text" v-model="newHero" placeholder="Type a new hero here" />
-    <button @click="newHero">Add a new hero</button>
-  </form>
+      <form class="mt-10" @submit.prevent="addHero()">
+        <input class="border rounded"
+          type="text"
+          v-model="newHero"
+          placeholder="Type a new hero here"
+        />
+        <button class="border rounded bg-gradient-to-t from-red-200 to-green-200 text-sm ml-10" @click="newHero">Add a new hero</button>
+      </form>
+    </div>
+  </div>
+
+   <div class="w-full flex">
+    <div class="m-auto">
+      <h1 class="text-2xl text-center">Using Components</h1>
+      <AppHeader/>
+      <AppHeros/>
+     
+    </div>
+  </div>
 
   <!-- 2:17:02 -->
 </template>
 
 <script>
+import AppHeader from "./components/AppHeader"
+import AppHeros from "./components/AppHeros.vue"
+
 export default {
+  components: {
+    AppHeader,
+    AppHeros
+  },
   data() {
     return {
       title: "DC Heros",
@@ -114,17 +141,17 @@ export default {
         this.newHero = "";
       }
     },
-    removeHero(index){
-      this.herosArrayOfObjects = this.herosArrayOfObjects.filter((hero, i) => i != index)
+    removeHero(index) {
+      this.herosArrayOfObjects = this.herosArrayOfObjects.filter(
+        (hero, i) => i != index
+      );
     },
     randM() {
       return Math.random();
     },
-    setFullName(){
-      
-      this.fullname = 'New Name'
-
-    }
+    setFullName() {
+      this.fullname = "New Name";
+    },
   },
   computed: {
     herosCount() {
@@ -137,11 +164,11 @@ export default {
       get() {
         return this.fname + " " + this.lname;
       },
-      set(fullname){
-        const values = fullname.split(" ")
-        this.fname = values[0]
-        this.lname = values[1]
-      }
+      set(fullname) {
+        const values = fullname.split(" ");
+        this.fname = values[0];
+        this.lname = values[1];
+      },
     },
   },
 };
